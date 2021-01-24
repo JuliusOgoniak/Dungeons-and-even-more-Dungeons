@@ -10,11 +10,11 @@ public class playerMovement : MonoBehaviour
     void Update()
     {
      //player walk
-     float _horizontal = Input.GetAxis("Horizontal");
-     float _vertical = Input.GetAxis("Vertical");
+     float _horizontal = Input.GetAxis("Horizontal") * movementSpeed;
+     float _vertical = Input.GetAxis("Vertical") * movementSpeed;
 
      Vector3 _movement = new Vector3(_horizontal, 0, _vertical);
-     transform.Translate(_movement * movementSpeed*Time.deltaTime,Space.World);
+     transform.Translate(_movement*Time.deltaTime,Space.World);
 
         //weapon aim
         RaycastHit _hit;
