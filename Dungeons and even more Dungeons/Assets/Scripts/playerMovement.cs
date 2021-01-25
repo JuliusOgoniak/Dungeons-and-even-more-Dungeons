@@ -4,17 +4,22 @@ using UnityEngine;
 
 public class playerMovement : MonoBehaviour
 {
-    [SerializeField]
-    private float movementSpeed;
-
-    void Update()
+    
+    public float movementSpeed;
+    Rigidbody rb;
+    public void Start()
     {
-     //player walk
-     float _horizontal = Input.GetAxis("Horizontal") * movementSpeed;
-     float _vertical = Input.GetAxis("Vertical") * movementSpeed;
+        rb = GetComponent<Rigidbody>();
+    }
 
-     Vector3 _movement = new Vector3(_horizontal, 0, _vertical);
-     transform.Translate(_movement*Time.deltaTime,Space.World);
+    void FixedUpdate()
+    {
+
+     //player walk
+        float _horizontal = Input.GetAxisRaw("Horizontal") * movementSpeed ;
+        float _vertical = Input.GetAxisRaw("Vertical") * movementSpeed;
+        
+        rb.velocity = new Vector3(_horizontal,0,_vertical) * Time.fixedDeltaTime; 
 
         //weapon aim
         RaycastHit _hit;
