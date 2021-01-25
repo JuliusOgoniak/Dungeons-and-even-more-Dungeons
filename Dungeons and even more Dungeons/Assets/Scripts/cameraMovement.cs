@@ -7,17 +7,21 @@ public class cameraMovement : MonoBehaviour
     [SerializeField]
     private Transform target;
     [SerializeField]
-    private Vector3 targetOffset;
+    public Vector3 targetOffset;
     [SerializeField]
-    private float movementSpeed;
+    private float smoothness;
 
     void Start()
     {
-        
+        transform.position = target.position + targetOffset;
     }
 
     void Update()
     {
-        transform.position = Vector3.Lerp(transform.position, target.position + targetOffset, movementSpeed * Time.deltaTime);
+        
+            transform.position = Vector3.Slerp(transform.position, target.position + targetOffset, smoothness * Time.fixedDeltaTime);
+            //Vector3 newPos = target.position;
+            //transform.position = Vector3.Slerp(transform.position, newPos + targetOffset , smoothness);
+        
     }
 }
