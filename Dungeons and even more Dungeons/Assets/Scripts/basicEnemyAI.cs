@@ -15,7 +15,7 @@ public class basicEnemyAI : MonoBehaviour
 
     //Patroling
     public Vector3 walkPoint;
-    bool walkPointSet;
+    bool walkPointSet = false;
     public float walkPointRange;
 
     //Attacking
@@ -45,13 +45,16 @@ public class basicEnemyAI : MonoBehaviour
 
     private void Patroling()
     {
-        if (!walkPointSet) SearchWalkpoint();
-        if (walkPointSet)
+        if (!walkPointSet) 
+            SearchWalkpoint();
+        else 
             agent.SetDestination(walkPoint);
+
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
 
         if (distanceToWalkPoint.magnitude < 1f)
             walkPointSet = false;
+        
     }
 
     private void SearchWalkpoint()
@@ -59,16 +62,18 @@ public class basicEnemyAI : MonoBehaviour
         float randomZ = Random.Range(-walkPointRange, walkPointRange);
         float randomX = Random.Range(-walkPointRange, walkPointRange);
 
-        walkPoint = new Vector3(transform.position.x + randomX, transform.position.z + randomZ);
+        walkPoint = new Vector3(transform.position.x + randomX, 3, transform.position.z + randomZ);
 
         if (Physics.Raycast(walkPoint, -transform.up, 2f, ground))
             walkPointSet = true;
+        
     }
 
     private void ChasePlayer()
     {
         agent.SetDestination(playerPos.position);
         transform.LookAt(playerPos);
+        walkPointSet = false;
     }
 
     private void AttackPlayer()
